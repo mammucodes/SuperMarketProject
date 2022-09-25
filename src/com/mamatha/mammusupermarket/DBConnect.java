@@ -20,7 +20,7 @@ public class DBConnect {
 	
 	//private String getStockDetailsByName_query= "select price,quantity,category from stock where ITEAM_NAME in(?, ?,?)"; // try to write in clause
 	private String insertStockItem_query = "insert into stock(iteam_name,price,quantity,category) values(?,?,?,?)"; // if we dont mention column names it takes 
-	private String getStockDetailsByCategoryName_query = " SELECT ITEAM_NAME,PRICE,QUANTITY,CATEGORY From STOCK WHERE CATEGORY =?";
+	private String getStockDetailsByCategoryName_query = " SELECT ITEAM_NAME,PRICE,QUANTITY,CATEGORY ,Brand From STOCK WHERE CATEGORY =?";
 	//private String getProductDetailsByNameAndBrand_query= "select iteam_name,price,quantity,category from stock where ITEAM_NAME  =? and Brand = ?)";
 	
 	private String updateStock_Quantity_qyeryByIteamNameAndBrand = "UPDATE STOCK   Set QUANTITY = ? WHERE ITEAM_NAME = ? and brand = ? ";
@@ -238,6 +238,7 @@ public class DBConnect {
 				itemDetails.setPrice(rs.getInt("PRICE"));
 				itemDetails.setQuantity(rs.getInt("QUANTITY"));
 				itemDetails.setCategory(rs.getString("CATEGORY"));
+				itemDetails.setBrand(rs.getString("BRAND"));
 			 categoryProducts.add(itemDetails);
 			}
 			return categoryProducts;

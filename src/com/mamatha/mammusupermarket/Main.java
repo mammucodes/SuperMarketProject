@@ -14,18 +14,16 @@ public class Main {
 
 		try {
 
-
-
 			System.out.println("enter the below  required  option to get details ");
 			System.out.println(
-					"Press 1 :To getSuperMarketTotalStock Details\n Press 2 :To getStockDetailsByname\n Press 3 : TO  updateStockListByBulk \n Press 4 : To printBillDetailsUsingName\n Press 5 : To getStock Details By Category info\n press 6 :getStock Details by Name and Brand\nPress 7: To checkoutAndPrintBillDetailsByNameAndBrand");
+					"Press 1 :To getSuperMarketTotalStock Details\n Press 2 To getStock Details By Category info:\n Press 3 : getStock Details by Name and Brand \n Press 4 :To update StockListByBulkNameAnd Brand \n Press 5 :To checkoutAndPrintBillDetailsByNameAndBrand \n  ");
 
 			int input = sc.nextInt();
 			sc.nextLine();
 
 			sm = new SuperMarket();
 			switch (input) {
-			
+
 			case 1:
 				sm.getSuperMarketStock();
 				break;
@@ -42,10 +40,8 @@ public class Main {
 			case 5:
 				checkoutAndPrintBillDetailsByNameAndBrand();
 				break;
-			
-			
-			
-			
+				default : System.out.println("entered not mentioned number");
+				break;
 
 			}
 
@@ -59,7 +55,6 @@ public class Main {
 
 	}
 
-	
 	public static void updateStockListByBulk() throws SQLException {
 
 		StockItem tu = new StockItem();
@@ -79,7 +74,7 @@ public class Main {
 		apple.setPrice(123);
 		apple.setQuantity(30);
 		apple.setCategory("Fruits");
-		
+
 		StockItem orange = new StockItem();
 		orange.setItemName("Orange");
 		orange.setPrice(66);
@@ -88,13 +83,11 @@ public class Main {
 		orange.setBrand("jammuOrange");
 
 		StockItem yogurt = new StockItem();
-		yogurt.setItemName( "Milky&Misty Yogurt");
+		yogurt.setItemName("Milky&Misty Yogurt");
 		yogurt.setPrice(50);
 		yogurt.setQuantity(5);
 		yogurt.setCategory("Dairy");
 		yogurt.setBrand("Milky&Misty");
-
-		
 
 		StockItem ghee = new StockItem();
 		ghee.setItemName("Hatsun Ghee");
@@ -102,7 +95,7 @@ public class Main {
 		ghee.setQuantity(5);
 		ghee.setCategory("Dairy");
 		ghee.setBrand("Hatsun");
-		
+
 		StockItem corn = new StockItem();
 		corn.setItemName("Sweet Corn");
 		corn.setPrice(30);
@@ -114,7 +107,7 @@ public class Main {
 		// newStockList.add(tu);
 		// newStockList.add(oil);
 		// newStockList.add(apple);
-		 newStockList.add(orange);
+		newStockList.add(orange);
 		newStockList.add(yogurt);
 		newStockList.add(ghee);
 		newStockList.add(corn);
@@ -158,8 +151,6 @@ public class Main {
 		}
 
 	}
-
-	
 
 	public static void checkoutAndPrintBillDetailsByNameAndBrand() {
 		ToBillItems milk = new ToBillItems();
