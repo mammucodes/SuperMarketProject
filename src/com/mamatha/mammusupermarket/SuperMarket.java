@@ -167,6 +167,7 @@ public class SuperMarket {
 			}
 
 			if (!itemExist) {
+				System.out.println("Too Bad.. no item");
 				System.out.println("i dont have that product in my supermarket");
 			}
 
