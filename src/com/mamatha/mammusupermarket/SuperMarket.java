@@ -130,7 +130,7 @@ public class SuperMarket {
 		for (ToBillItems temp : itemsLs) {
 			itemExist = false;
 			for (StockItem exstock : existingStockList) {
-
+				System.out.println("In for loop");
 				if (temp.getIteamName().equals(exstock.getItemName())) {
 
 					BilledItem billInfo = new BilledItem(); // if we write thz outside for loop it will create object
