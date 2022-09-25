@@ -43,36 +43,13 @@ public class SuperMarket {
 		for (StockItem temp : newStock) {
 			realNewItem = true;
 
-			for (StockItem exstock : existingStock) {
-
-				if ((temp.getItemName().equals(exstock.getItemName()))
-						&& (temp.getBrand().equals(exstock.getBrand()))) {
-
-					System.out.println("old item came today!! " + exstock.getItemName());
-					System.out.println("exisitng stock of item " + existingStock); // we have to write toString()
-
-					int newQunatity = temp.getQuantity();
-					temp.setQuantity(exstock.getQuantity() + newQunatity);
-					if (temp.getPrice() == 0)
-						temp.setPrice(exstock.getPrice());
-
-					if (exstock.getCategory() != null)
-						temp.setCategory(exstock.getCategory());
-					if(exstock.getBrand()!=null)
-						temp.setCategory(exstock.getBrand());
-
-					updateStkList.add(temp);
-					realNewItem = false;
-					break;
-
-				}
-
-			}
-
-			if (realNewItem) {
+			StockItem newTemp = isNewItemPresentInExStock(temp, existingStock);
+			
+			if(newTemp != null)
+				updateStkList.add(newTemp); // present in exStock so adding newTemp returned from method
+			else{
 				System.out.println("new item came today!! " + temp);
-
-				insertStkList.add(temp);
+				insertStkList.add(temp); // because it is not present in exStock so adding temp from passed StockItem
 			}
 
 		}
@@ -102,7 +79,33 @@ public class SuperMarket {
 		return countSucess;
 
 	}
+	public StockItem isNewItemPresentInExStock(StockItem temp, List<StockItem> existingStock) {
+	
+		for (StockItem exstock : existingStock) {
 
+			if ((temp.getItemName().equals(exstock.getItemName()))
+					&& (temp.getBrand().equals(exstock.getBrand()))) {
+
+				System.out.println("old item came today!! " + exstock.getItemName());
+				System.out.println("exisitng stock of item " + existingStock); // we have to write toString()
+
+				int newQunatity = temp.getQuantity();
+				temp.setQuantity(exstock.getQuantity() + newQunatity);
+				if (temp.getPrice() == 0)
+					temp.setPrice(exstock.getPrice());
+
+				if (exstock.getCategory() != null)
+					temp.setCategory(exstock.getCategory());
+				if(exstock.getBrand()!=null)
+					temp.setCategory(exstock.getBrand());
+
+				
+				return temp;
+			}
+
+		}
+		return null;
+	}
 	private List<ToBillItems> extractedDataFromStockItemListtoTOBillItemList(List<StockItem> newStock) {
 		List<ToBillItems> lstData = new ArrayList<ToBillItems>();
 		for (StockItem stItem : newStock) {
@@ -114,7 +117,9 @@ public class SuperMarket {
 
 		}
 		return lstData;
+		
 	}
+	
 
 	public List<BilledItem> printBillDetails(List<ToBillItems> itemsLs) {// by using  item name
 		boolean itemExist = false;
