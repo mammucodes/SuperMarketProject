@@ -28,18 +28,13 @@ public class DBConnect {
 	private PreparedStatement  queryStockInfoStmt;
 	private PreparedStatement insertStockInfoStmt;
 	private PreparedStatement  updateStockInfoStmt;
-	private PreparedStatement getStockDetailsByListOfName_Stmt;
+
 	private PreparedStatement getStockDetailsByCategory_Stmt;
 	private PreparedStatement updateStockQunatityByNameAndBrand_Stmt;
 	
 	private PreparedStatement getItemDetailsBYNameAndBrand_Stmt;
 	
-//	public PreparedStatement getQueryStockInfo() {
-//		return queryStockInfo;
-//	}
-//	public void setQueryStockInfo(PreparedStatement queryStockInfo) {
-//		this.queryStockInfo = queryStockInfo;
-//	}
+
 	public  DBConnect() throws SQLException {
 		
      con = DriverManager.getConnection(Url);
@@ -90,76 +85,10 @@ public class DBConnect {
 	
 	
 	
-	public  boolean updateStock(StockItem item) {
-	
-	try {
-		
-		updateStockInfoStmt.setInt(1, item.getPrice());
-		updateStockInfoStmt.setInt(2, item.getQuantity());
-		updateStockInfoStmt.setString(3, item.getCategory());
-		updateStockInfoStmt.setString(4, item.getItemName());
-			updateStockInfoStmt.executeUpdate();
-		//System.out.println("sucessfully updated");
-		
-		return true;
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		System.out.println("failed to update");
-		return false;
-	}
-	
-		
-		
-		
-	}
 	
 	
-	//This function will return the first item if they are more than 1 item  with same name
+
 	
-//	public StockItem getStockDetailsByName(String itemName) throws SQLException {
-//		queryStockInfoStmt.setString(1, itemName);
-//	ResultSet rs = 	queryStockInfoStmt.executeQuery();
-//	StockItem item = null;
-//	while(rs.next()) {
-//	
-//		item = new StockItem();
-//		item.setPrice(rs.getInt("price"));
-//		item.setItemName(itemName);
-//		item.setQuantity(rs.getInt("QUANTITY"));
-//		item.setCategory(rs.getString("CATEGORY"));
-//		break;
-//		
-//	}
-//	
-//	return item;	
-//	
-//	
-//	}
-	public boolean insertStockItem(StockItem listOfItem ) {
-		
-	//listOfItem = new StockItem();
-	//insert into stock(item_name,price,quantity,category) values(?,?,?,?)
-		try {
-			
-			insertStockInfoStmt.setString(1,listOfItem.getItemName() );
-			insertStockInfoStmt.setInt(2, listOfItem.getPrice());
-			insertStockInfoStmt.setInt(3, listOfItem.getQuantity());
-			insertStockInfoStmt.setString(4, listOfItem.getCategory());
-			//System.out.println("inserted sucessfully");
-			insertStockInfoStmt.executeUpdate();
-			
-			
-			return true;
-		}
-			 catch (SQLException e) {
-			
-			System.out.println("failed to insert");
-			e.printStackTrace();
-			return false;
-		}
-	
-	}
 		
 	
 	public boolean insertBulkStockItem(List<StockItem> lsItem)
@@ -231,58 +160,7 @@ public class DBConnect {
 	}
 	
 	}
-	public List<StockItem> getStockDetailsByListOfNames(List<String> itemNames)
-	{
-		//create sql query
-		int length = itemNames.size();
-		String  str = "";
-		String getStockDetailsBYName_query = "select Iteam_Name,price,quantity,category ,Brand from stock where iteam_Name in ( ";
-		for(int i=1;i<=itemNames.size();i++)
-		{
-			str+= "?,";
-		}
-		str = str.substring(0, str.length()-1);
-		 str+= ")";
-		 getStockDetailsBYName_query+=str;
-		System.out.println(getStockDetailsBYName_query);
-		//create prepared stmt using the sql query
-		try {
-			getStockDetailsByListOfName_Stmt = con.prepareStatement(getStockDetailsBYName_query);
-		
-			//addinputs to the prpeared stmt and add batch 
-			for(int i = 1;i<=length;i++)
-			{
-				getStockDetailsByListOfName_Stmt.setString(i, itemNames.get(i-1));
-			
-			}
-		ResultSet rs = 	getStockDetailsByListOfName_Stmt.executeQuery();
-		List<StockItem> returnstock = new ArrayList();
-		StockItem item = null;
-		while(rs.next())
-		{      
-			item = new StockItem();
-			item.setItemName(rs.getString("ITEAM_NAME"));
-			item.setPrice(rs.getInt("PRICE"));
-			item.setQuantity (rs.getInt("QUANTITY"));
-			item.setCategory(rs.getString("CATEGORY"));
-			item.setBrand(rs.getString("Brand"));
-		 	returnstock.add(item);
-			
-			
-			
-		}
-			
-		rs.close();
-			
-		return returnstock;
-		
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
-	}
+	
 	
 	
 	public List<StockItem> getStockItemDetailByNameAndBrand(List<ToBillItems> nameAndBrand) {
@@ -383,11 +261,21 @@ public class DBConnect {
 	 }
 		 if(queryStockInfoStmt!=null)
 			 queryStockInfoStmt.close();
+		 
 		 if(insertStockInfoStmt!=null)
 			 insertStockInfoStmt.close();
+		 
 		 if(updateStockInfoStmt!=null)
 			 updateStockInfoStmt.close();
+		 
+		 if(getStockDetailsByCategory_Stmt!=null)
+			 getStockDetailsByCategory_Stmt.close();
+		 
+		 if(getItemDetailsBYNameAndBrand_Stmt!=null)
+			 getItemDetailsBYNameAndBrand_Stmt.close();
+		 
 	    if(con!=null)
+	    	
      	con.close();
 		} catch (SQLException e) {
 			System.out.println("failed to close connections");

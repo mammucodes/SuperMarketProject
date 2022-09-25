@@ -20,12 +20,7 @@ public class SuperMarket {
 
 	}
 
-	//male it as private so no once access directly  thz is for testing without brand name now it is not required
-	public List<StockItem> getStockByListOfNames(List<String> itemsName) {
-
-		return dbConnection.getStockDetailsByListOfNames(itemsName);
-
-	}
+	
 
 	int updateBulkStock(List<StockItem> newStock) throws SQLException {
 
@@ -121,70 +116,7 @@ public class SuperMarket {
 	}
 	
 
-	public List<BilledItem> printBillDetails(List<ToBillItems> itemsLs) {// by using  item name
-		boolean itemExist = false;
-		List<String> itemsNames = new ArrayList();
-		List<BilledItem> totalBillDetails = new ArrayList();
-		List<StockItem> updateStockList = new ArrayList();
-
-		for (ToBillItems temp : itemsLs) {
-			itemsNames.add(temp.getIteamName());
-		}
-
-		List<StockItem> existingStockList = dbConnection.getStockDetailsByListOfNames(itemsNames); // checking only with item name
-		for (ToBillItems temp : itemsLs) {
-			itemExist = false;
-			for (StockItem exstock : existingStockList) {
-				
-				System.out.println("new commment in the code");
-				if (temp.getIteamName().equals(exstock.getItemName())) {
-
-					BilledItem billInfo = new BilledItem(); // if we write thz outside for loop it will create object
-															// only once and it repalces all data with last added
-															// product
-					System.out.println("item present please give  bill to user");
-					int pricePerUnit = exstock.getPrice();
-					int noOfQuantitesrequired = temp.getQuantity();
-					int totalPrice = noOfQuantitesrequired * pricePerUnit;
-					billInfo.setIteamName(temp.getIteamName());
-					billInfo.setPrice(pricePerUnit);
-					billInfo.setTotalPrice(totalPrice);
-
-					if (noOfQuantitesrequired <= exstock.getQuantity()) {
-						billInfo.setQuantity(noOfQuantitesrequired);
-
-						int dbQuantityUpdate = exstock.getQuantity() - noOfQuantitesrequired;
-
-						exstock.setQuantity(dbQuantityUpdate);
-
-						updateStockList.add(exstock);
-
-						totalBillDetails.add(billInfo);
-					} else {
-						System.out.println(" i  dont have enough stock you asked for  ");
-						System.out.println(" i have only " + exstock.getQuantity() + " Quantities");
-					}
-
-					itemExist = true;
-					break;
-
-				}
-			}
-
-			if (!itemExist) {
-				System.out.println("Too Bad.. no item");
-				System.out.println("i dont have that product in my supermarket");
-			}
-
-		}
-		boolean updatedQuantity = dbConnection.updateBulkStock(updateStockList);
-		if (updatedQuantity)
-			System.out.println("data updated sucessfully in database");
-		else
-			System.out.println("Failed to update the quantity");
-
-		return totalBillDetails;
-	}
+	
 
 	public List<StockItem> getStockDetailsByCategoryName(String category) throws SQLException {
 
@@ -255,19 +187,6 @@ public class SuperMarket {
 
 	}
 
-//	public StockItem getStockDetailByIteamName(String itemName)
-//	{
-//		try {
-//			 StockItem  gotStock =  dbConnection.getStockDetailsByName(itemName);
-//			System.out.println("got stock details with iteam Name : "+itemName+" ::"+gotStock);
-//			return gotStock;
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			System.out.println("failed to get stock detail by name" +itemName);
-//			return null;
-//		}
-//	}
 
 	public void close() {
 		if (dbConnection != null)

@@ -14,27 +14,7 @@ public class Main {
 
 		try {
 
-//			
-//			List<ItemDetails> itemsDetail  = sm.getSuperMarketStock();
-//			
-//					for(ItemDetails item :itemsDetail)
-//					{
-//						System.out.println(item.getItemName()+" , "+item.getPrice()+" ,"+item.getQuantity()+" , "+item.getCategory());
-//					}
-//			
-//
 
-//			for(StockItem tempStock : newStockList) {
-//				
-//			
-//		  boolean inserted = 	db.insertStockItem(tempStock);
-//			
-//		if(inserted)
-//			System.out.println("inserted sucessfully");
-//		else
-//			System.out.println("failed to insert");
-//		
-//			}
 
 			System.out.println("enter the below  required  option to get details ");
 			System.out.println(
@@ -50,29 +30,22 @@ public class Main {
 				sm.getSuperMarketStock();
 				break;
 			case 2:
-				getStockDetailsByname();
+				getStockDetailsByCategoryInfo("Dairy");
 				break;
 			case 3:
+				getStockDetailsByNameAndBrand();
+				break;
+			case 4:
 				updateStockListByBulk();
 
 				break;
-//			case 3:
-//				System.out.println("enter iteam name you want to search");
-//				String iteamName = sc.next();
-//				sm.getStockDetailByIteamName(iteamName);
-//				return;
-			case 4:
-				printBillDetailsUsingName();
-				break;
 			case 5:
-				getStockDetailsByCategoryInfo("Dairy");
-				break;
-			case 6:
-				getStockDetailsByNameAndBrand();
-				break;
-			case 7:
 				checkoutAndPrintBillDetailsByNameAndBrand();
 				break;
+			
+			
+			
+			
 
 			}
 
@@ -86,21 +59,7 @@ public class Main {
 
 	}
 
-	public static void getStockDetailsByname() {
-
-		List<String> itemNames = new ArrayList<>();
-
-		String Apple = "Apple";
-		itemNames.add(Apple);
-		itemNames.add("Orange");
-		itemNames.add("Hatsun Ghee");
-		System.out.println("testing");
-		List<StockItem> stockDetails = sm.getStockByListOfNames(itemNames);
-		for (StockItem temp : stockDetails) {
-			System.out.println(temp);
-		}
-	}
-
+	
 	public static void updateStockListByBulk() throws SQLException {
 
 		StockItem tu = new StockItem();
@@ -200,28 +159,7 @@ public class Main {
 
 	}
 
-	public static void printBillDetailsUsingName() {
-
-		List<ToBillItems> billforproducts = new ArrayList<ToBillItems>();
-		ToBillItems applefru = new ToBillItems();
-		applefru.setIteamName("Apple");
-		applefru.setQuantity(180);
-
-		ToBillItems orangefru = new ToBillItems();
-		orangefru.setIteamName("Orange");
-		orangefru.setQuantity(4);
-		ToBillItems chips = new ToBillItems();
-		chips.setIteamName("Lays Chips");
-		chips.setQuantity(3);
-
-		billforproducts.add(applefru);
-		billforproducts.add(orangefru);
-		billforproducts.add(chips);
-		List<BilledItem> finalbill = sm.printBillDetails(billforproducts);
-		for (BilledItem temp : finalbill) {
-			System.out.println(temp);
-		}
-	}
+	
 
 	public static void checkoutAndPrintBillDetailsByNameAndBrand() {
 		ToBillItems milk = new ToBillItems();
